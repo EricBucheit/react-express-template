@@ -1,0 +1,64 @@
+
+Copy the project or clone/download from git.
+npm install
+
+------------------------------------------------------------------------------------
+*important
+	The models object which is converted into the db object is referenced by folder name.
+	if the model folderName is User, then you reference with db.User
+	
+	Same goes for the Routes, although you should not have to add anything to them because they setup one time.
+
+	Controllers follow the same principal while importing them from /Server/Controllers.
+	More about the controllers below.
+
+------------------------------------------------------------------------------------
+
+1. Navigate to the sequelize folder in root
+
+	a. Change the database variable to reflect your connection information.
+	c. create the database via postgres or other database dialect.
+
+------------------------------------------------------------------------------------
+
+* -- Configuring the first Model, Controller, and Route. -- *
+
+2. Navigate to /Server/Models
+	a. Change the name of Folder "GenericModel" to the name of your model.
+	b. inside the newly named Folder, open index.js and change the table name.
+	c. fill in the model with desired columns.
+
+3. Navigate to /Server/Controllers
+	Change GenericController name, to a name that matches the newly named model
+	it comes with six template functions to reflect commonly used routes.
+
+4. Navigate to /Server/Routes
+	a. Change the name of the Folder "GenericRoute" to the name of your Route
+	b. inside the newly named Folder, open index.js and change the controller to the name of 
+		your controller you will be using.
+	c. change the routePrefix variable to reflect what route prefix to use.
+
+*notes:
+	It dynamically imports the files from the containing folders root index.js
+		(Ex: /Server/Models/index.js)
+	In Routes it is a big object with all routes from inside the folder, with names matching the Folder.
+	In Models, it is the same as routes.
+
+	In Controllers, it is broken up so that you can require just the module you need inside of the route.
+		for example : const {GenericController} = require("../Controllers");
+
+	--* The import name matches the Folder name that it comes from.
+	
+------------------------------------------------------------------------------------
+
+
+* -- Create More -- *
+
+Repeat the same steps as above, but instead of Renaming, just create.
+There are Some Templates in the corresponding directories you can copy to help get you started.
+
+since they are dynamically imported, Models, Routes, and Controllers must export the correct objects
+
+
+
+
