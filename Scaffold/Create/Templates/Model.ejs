@@ -1,0 +1,12 @@
+
+const table = {
+	name: "<%= varName %>",
+}
+module.exports = (sequelize, type) => {
+  const <%= name %> = sequelize.define(table.name, {
+  	//example
+  	//title: type.STRING,
+  });
+  return <%= name %> ;
+};
+	

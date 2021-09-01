@@ -3,10 +3,11 @@ const bodyParser = require('body-parser')
 const path = require('path');
 const app = express();
 const cors = require("cors");
-
-const {db, connection} = require('./sequelize');
+require('dotenv').config()
+const {db, connection} = require('./Sequelize');
 const Routes = require('./Server/Routes');
 
+app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(cors());
 
@@ -18,4 +19,4 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.listen(8080);
+app.listen(8100);

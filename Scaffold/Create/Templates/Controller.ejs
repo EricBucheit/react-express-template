@@ -1,0 +1,102 @@
+ module.exports = {
+	test () {
+		return ('test')
+	},
+
+	async getOne(req, db) {
+		let <%= varName %> = await db.<%= name %>.findOne({where:{id: req.params.id}})
+		return <%= varName %>
+	},
+
+	async getAll(req, db) {
+		let <%= varName %>s = await db.<%= name %>.findAll({})
+		return <%= varName %>s
+	},
+
+	async count(req, db) {
+		let count = await db.<%= name %>.count()
+		return count
+	},
+
+	async post(req, db) {
+		let <%= varName %> = await db.<%= name %>.create(req.body)
+		return <%= varName %>
+	},
+
+	async put(req, db) {
+		let <%= varName %> = await this.getOne(req, db)
+		if (<%= varName %>) {
+			<%= varName %> = await <%= varName %>.update(req.body)
+		}
+		return <%= varName %>
+
+	},
+
+	async destroy(req,  db) {
+		let <%= varName %> = await this.getOne(req, db)
+		if (<%= varName %>) {
+			<%= varName %> = await <%= varName %>.destroy();
+		}
+		return <%= varName %>
+	},
+
+<% if (currentModel) { %>
+	<% for (let model of currentModel.hasMany) { %>
+		<% let heiarchy = findHeirarchyAssociations(associations, model) %>
+		<% let heiarchyStr = JSON.stringify(heiarchy, null, 2).replaceAll(`"`, "") %>
+
+	async get<%= name %>With<%= model %>(req, db) {
+		let <%= varName %> = await db.<%= name %>.findOne({
+			where:{
+				id: req.params.id
+			},
+			include: [{model: db.<%= model %>}]
+		});
+		return <%= varName %>
+	},
+
+
+	async create<%= name %>With<%= model %>(req, db) {
+		let <%= varName %> = await db.<%= name %>.create(req.body, {
+			include: [{model: db.<%= model %>}]
+		});
+		return <%= varName %>
+	},
+
+
+	async getOneWith<%= model %>Associations(req, db) {
+		let <%= varName %> = await db.<%= name %>.findOne({
+			where:{
+				id: req.params.id
+			},
+			include: [
+			<% heiarchyStr.split('\n').forEach((line, index) => { %>
+				<%= line %>
+			<% }) %>
+			]
+		});
+		return <%= varName %>
+	},
+
+	async getAllWith<%= model %>Associations(req, db) {
+		let <%= varName %> = await db.<%= name %>.findAll({
+			include: [
+			<% heiarchyStr.split('\n').forEach((line, index) => { %>
+				<%= line %>
+			<% }) %>
+			]
+		});
+		return <%= varName %>
+	},
+
+	<% } %>
+
+	
+	
+	
+			
+
+<% } %>
+
+}
+

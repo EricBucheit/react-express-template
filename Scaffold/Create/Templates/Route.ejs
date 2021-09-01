@@ -1,0 +1,113 @@
+		const {<%= name %>} = require('../../Controllers')
+		module.exports = (app, db) => {
+		
+		
+			app.get(`<%= routePrefix %>/test`, (req, res) => {
+				let <%= varName %> = <%= name %>.test();
+				res.json({code: 1, message: "test success" })
+			})
+
+			app.get(`<%= routePrefix %>/:id`, async (req, res) => {
+				let <%= varName %> = await <%= name %>.getOne(req, db);
+				if (<%= varName %>) {
+					res.json({code: 1, message: "Success", <%= varName %> })
+				} else {
+					res.json({code: -1, mesage: "Failed"})
+				}
+			})
+
+			app.get(`<%= routePrefix %>/`, async (req, res) => {
+				let <%= varName %> = await <%= name %>.getAll(req, db);
+
+				if (<%= varName %>) {
+					res.json({code: 1, message: "Success", <%= varName %> })
+				} else {
+					res.json({code: -1, mesage: "Failed"})
+				}
+
+			})
+
+			app.get(`<%= routePrefix %>/count/all`, async (req, res) => {
+				let count = await <%= name %>.count(req, db);
+
+				if (count) {
+					res.json({code: 1, message: "Success", count: count })
+				} else {
+					res.json({code: -1, mesage: "Failed"})
+				}
+
+			})
+
+			app.post(`<%= routePrefix %>`, async (req, res) => {
+				let <%= varName %> = await <%= name %>.post(req, db);
+				if (<%= varName %>) {
+					res.json({code: 1, message: "Success", <%= varName %> })
+				} else {
+					res.json({code: -1, mesage: "Failed"})
+				}
+
+			})
+
+			app.put(`<%= routePrefix %>/:id`, async (req, res) => {
+				let <%= varName %> = await <%= name %>.put(req, db);
+				if (<%= varName %>) {
+					res.json({code: 1, message: "Success", <%= varName %> })
+				} else {
+					res.json({code: -1, mesage: "Failed"})
+				}
+
+			})
+
+			app.delete(`<%= routePrefix %>/:id`, async (req, res) => {
+				let <%= varName %> = await <%= name %>.destroy(req, db);
+				if (<%= varName %>) {
+					res.json({code: 1, message: "Success", <%= varName %> })
+				} else {
+					res.json({code: -1, mesage: "Failed"})
+				}
+			})
+
+	<% if (currentModel) { %>
+		<% for (let model of currentModel.hasMany) { %>
+			<% lc_model = LowerCaseFirstLetter(model) %>
+
+				app.get(`<%= routePrefix %>/:id/<%= lc_model %>`, async (req, res) => {
+					let <%= varName %> = await <%= name %>.get<%= name %>With<%= model %>(req, db);
+					if (<%= varName %>) {
+						res.json({code: 1, message: "Success", <%= varName %> })
+					} else {
+						res.json({code: -1, mesage: "Failed"})
+					}
+				})
+
+
+				app.post(`<%= routePrefix %>/<%= lc_model %>`, async (req, res) => {
+					let <%= varName %> = await <%= name %>.create<%= name %>With<%= model %>(req, db);
+					if (<%= varName %>) {
+						res.json({code: 1, message: "Success", <%= varName %> })
+					} else {
+						res.json({code: -1, mesage: "Failed"})
+					}
+				})
+
+				app.get(`<%= routePrefix %>/:id/<%= lc_model %>/all/associations`, async (req, res) => {
+					let <%= varName %> = await <%= name %>.getOneWith<%= model %>Associations(req, db);
+					if (<%= varName %>) {
+						res.json({code: 1, message: "Success", <%= varName %> })
+					} else {
+						res.json({code: -1, mesage: "Failed"})
+					}
+				})
+
+				app.get(`<%= routePrefix %>/all/associations`, async (req, res) => {
+					let <%= varName %> = await <%= name %>.getAllWith<%= model %>Associations(req, db);
+					if (<%= varName %>) {
+						res.json({code: 1, message: "Success", <%= varName %> })
+					} else {
+						res.json({code: -1, mesage: "Failed"})
+					}
+				})
+		<% } %>		
+	<% } %>
+
+}
