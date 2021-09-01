@@ -45,9 +45,9 @@ for (let api of apiConfig) {
       db[api.name].hasMany(db[model], {constraints: false})
     }
 
-  for (model of api.belongsTo) {
-    db[api.name].belongsTo(db[model], {constraints: false})
-  }
+    for (model of api.belongsTo) {
+      db[api.name].belongsTo(db[model], {constraints: false})
+    }
 
   }
  
