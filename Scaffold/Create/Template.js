@@ -2,6 +2,7 @@ let ejs = require('ejs');
 
 function CreateTemplate(info, verbose = false) {
 	const associations = require('../Config/Config');
+	
 	const {
 		camelToSnakeCase,
 		mkdir,

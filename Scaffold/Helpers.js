@@ -1,5 +1,23 @@
 const fs = require('fs');
 
+	 function getDbColumns(db) {
+	 	let data = [];
+			try {
+				for( let key in db.rawAttributes ){
+					if (key === "id" || key === "createdAt" || key === "updatedAt") {
+				 		continue
+				 	} else {
+				 		let type = db.rawAttributes[key].type.key
+				 		data.push({key: key, type:type})	
+				 	}
+				 	
+				}
+			} catch (err) {
+				console.log(err)
+			}
+			return data;
+	 }
+
 	 function getModel(associations, name) {
 		for (let association of associations) {
 			if (association.name === name) {
@@ -9,34 +27,58 @@ const fs = require('fs');
 		return false
 	}
 
-	 function findHeirarchyAssociations(associations, name) {
-	 	//recurse through model and get associations.
+	function findHeirarchyAssociations(associations, name, names=[]) {
+		// recurse through associations and add them to the includes object, used for controller / test composition
 
+		// find current model from /config/config
 		let model = getModel(associations, name);
-		
+
 		let include = {
 			model: `db.${model.name}`,
 			include: [],
 		}
 
-
-
-		if (model) {
-			if (model.hasMany.length) {
-				for (association of model.hasMany) {
-					include.include.push(findHeirarchyAssociations(associations, association));
-				}
+		// check to see if we already covered the association so it wont keep looping
+		for (let n of names) {
+			if (n === name) {
+				return false;
 			}
-
 		}
+		
+		// add name to list of names we already associated
+		names.push(name);
 
+		//push the includes and return the current includes to be added the the previous stack only if we havent covered that model yet
+
+		try {
+			if (model) {
+				if (model.hasMany.length) {
+					for (association of model.hasMany) {
+						let newInclude = findHeirarchyAssociations(associations, association, names)
+						if (newInclude) {
+							include.include.push(newInclude);	
+						}
+					}
+				}
+
+				if (model.belongsTo.length) {
+					for (association of model.belongsTo) {
+						let newInclude = findHeirarchyAssociations(associations, association, names)
+						if (newInclude) {
+							include.include.push(newInclude);	
+						}
+					}
+				}
+			}	
+		} catch(err) {
+			console.log(err)
+		}
+	
 		return include;
-
 	}
 
 
-
-	 function LowerCaseFirstLetter(string) {
+	function LowerCaseFirstLetter(string) {
   		return string.charAt(0).toLowerCase() + string.slice(1);
 	}
 
@@ -129,4 +171,5 @@ module.exports = {
 	cp,
 	rmdir,
 	RemoveAllDirectories,
+	getDbColumns
 }

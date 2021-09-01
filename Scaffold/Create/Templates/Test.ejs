@@ -145,15 +145,16 @@
 						})
 					})
 				},
-				get<%= name %>WithAllAssociations(config) {
-					describe(`get<%= name %>WithAllAssociations(): get all with Associations`, function() {
-						it("should have status code 1", function() {
-							return <%= name %>.getWithAllAssociations(20).then(data => {
-								assert.equal(data.code, 1) 
-							});
-						})
-					})
-				},
+				
 			<% } %>
+			get<%= name %>WithAllAssociations(config) {
+				describe(`get<%= name %>WithAllAssociations(): get all with Associations`, function() {
+					it("should have status code 1", function() {
+						return <%= name %>.getWithAllAssociations(20).then(data => {
+							assert.equal(data.code, 1) 
+						});
+					})
+				})
+			},
 		<% } %>
 }

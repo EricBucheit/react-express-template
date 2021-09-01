@@ -1,12 +1,18 @@
 
-const table = {
-	name: "<%= varName %>",
-}
-module.exports = (sequelize, type) => {
-  const <%= name %> = sequelize.define(table.name, {
-  	//example
-  	//title: type.STRING,
-  });
-  return <%= name %> ;
-};
+	const table = {
+		name: "<%= varName %>",
+	}
+	module.exports = (sequelize, type) => {
+	  const <%= name %> = sequelize.define(table.name, {
+			//example
+		  	//title: type.STRING,
+	<%_ if (currentModel) { _%>
+		<%_ for (let column of currentModel.columns) { _%>
+			<%= column.key %>: type.<%= column.type.split(" ")[0] %>,
+		<%_ } _%>
+	<%_ } _%>
+	  	
+	  });
+	  return <%= name %> ;
+	};
 	

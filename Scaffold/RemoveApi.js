@@ -65,7 +65,6 @@ function updateApiConfig(name) {
 		if (table.name === name) {
 			apiSetup.splice(index, 1);	
 		}
-		
 	})
 
 	writeToFile(`./Scaffold/Config/Config.js`, `let api = ${JSON.stringify(apiSetup, null, 2)}\n module.exports = api`);

@@ -41,9 +41,12 @@
 	},
 
 <% if (currentModel) { %>
+	<% let heiarchy = false %>
+	<% let heiarchyStr = false %>
+
 	<% for (let model of currentModel.hasMany) { %>
-		<% let heiarchy = findHeirarchyAssociations(associations, model) %>
-		<% let heiarchyStr = JSON.stringify(heiarchy, null, 2).replaceAll(`"`, "") %>
+		<% heiarchy = findHeirarchyAssociations(associations, model) %>
+		<% heiarchyStr = JSON.stringify(heiarchy, null, 2).replaceAll(`"`, "") %>
 
 	async get<%= name %>With<%= model %>(req, db) {
 		let <%= varName %> = await db.<%= name %>.findOne({
@@ -78,21 +81,22 @@
 		return <%= varName %>
 	},
 
-	async getAllWith<%= model %>Associations(req, db) {
-		let <%= varName %> = await db.<%= name %>.findAll({
-			include: [
-			<% heiarchyStr.split('\n').forEach((line, index) => { %>
-				<%= line %>
-			<% }) %>
-			]
-		});
-		return <%= varName %>
-	},
+	
 
 	<% } %>
 
-	
-	
+	<% if (heiarchyStr) { %>
+		async getAllWithAssociations(req, db) {
+			let <%= varName %> = await db.<%= name %>.findAll({
+				include: [
+				<% heiarchyStr.split('\n').forEach((line, index) => { %>
+					<%= line %>
+				<% }) %>
+				]
+			});
+			return <%= varName %>
+		},
+	<% } %>
 	
 			
 

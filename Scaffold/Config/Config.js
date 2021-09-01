@@ -5,7 +5,13 @@ let api = [
     "hasMany": [
       "Items"
     ],
-    "verbose": false
+    "verbose": false,
+    "columns": [
+      {
+        "key": "name",
+        "type": "STRING"
+      }
+    ]
   },
   {
     "name": "Items",
@@ -13,7 +19,25 @@ let api = [
       "Categories"
     ],
     "hasMany": [],
-    "verbose": false
+    "verbose": false,
+    "columns": [
+      {
+        "key": "name",
+        "type": "STRING"
+      },
+      {
+        "key": "price",
+        "type": "DOUBLE PRECISION"
+      },
+      {
+        "key": "description",
+        "type": "STRING"
+      },
+      {
+        "key": "quantity",
+        "type": "INTEGER"
+      }
+    ]
   },
   {
     "name": "Customers",
@@ -23,7 +47,33 @@ let api = [
     "hasMany": [
       "Orders"
     ],
-    "verbose": false
+    "verbose": false,
+    "columns": [
+      {
+        "key": "first_name",
+        "type": "STRING"
+      },
+      {
+        "key": "last_name",
+        "type": "STRING"
+      },
+      {
+        "key": "phone_number",
+        "type": "STRING"
+      },
+      {
+        "key": "address",
+        "type": "STRING"
+      },
+      {
+        "key": "city",
+        "type": "STRING"
+      },
+      {
+        "key": "notes",
+        "type": "STRING"
+      }
+    ]
   },
   {
     "name": "Orders",
@@ -33,7 +83,45 @@ let api = [
     "hasMany": [
       "OrderItems"
     ],
-    "verbose": false
+    "verbose": false,
+    "columns": [
+      {
+        "key": "first_name",
+        "type": "STRING"
+      },
+      {
+        "key": "last_name",
+        "type": "STRING"
+      },
+      {
+        "key": "address",
+        "type": "STRING"
+      },
+      {
+        "key": "city",
+        "type": "STRING"
+      },
+      {
+        "key": "phone_number",
+        "type": "STRING"
+      },
+      {
+        "key": "email",
+        "type": "STRING"
+      },
+      {
+        "key": "date",
+        "type": "DATEONLY"
+      },
+      {
+        "key": "time",
+        "type": "TIME"
+      },
+      {
+        "key": "canceled",
+        "type": "BOOLEAN"
+      }
+    ]
   },
   {
     "name": "OrderItems",
@@ -42,7 +130,8 @@ let api = [
       "Orders",
       "Items"
     ],
-    "verbose": false
+    "verbose": false,
+    "columns": []
   },
   {
     "name": "Employees",
@@ -50,13 +139,49 @@ let api = [
       "Users"
     ],
     "hasMany": [],
-    "verbose": false
+    "verbose": false,
+    "columns": [
+      {
+        "key": "first_name",
+        "type": "STRING"
+      },
+      {
+        "key": "last_name",
+        "type": "STRING"
+      },
+      {
+        "key": "email",
+        "type": "STRING"
+      },
+      {
+        "key": "password",
+        "type": "STRING"
+      }
+    ]
   },
   {
     "name": "Expenses",
     "belongsTo": [],
     "hasMany": [],
-    "verbose": false
+    "verbose": false,
+    "columns": [
+      {
+        "key": "date",
+        "type": "DATEONLY"
+      },
+      {
+        "key": "gas",
+        "type": "DOUBLE PRECISION"
+      },
+      {
+        "key": "employees",
+        "type": "DOUBLE PRECISION"
+      },
+      {
+        "key": "misc",
+        "type": "DOUBLE PRECISION"
+      }
+    ]
   },
   {
     "name": "Packages",
@@ -65,16 +190,34 @@ let api = [
       "PackageItems"
     ],
     "belongsTo": [],
-    "verbose": false
+    "verbose": false,
+    "columns": [
+      {
+        "key": "name",
+        "type": "STRING"
+      },
+      {
+        "key": "price",
+        "type": "DOUBLE PRECISION"
+      },
+      {
+        "key": "description",
+        "type": "STRING"
+      },
+      {
+        "key": "quantity",
+        "type": "INTEGER"
+      }
+    ]
   },
   {
     "name": "PackageItems",
     "hasMany": [],
     "belongsTo": [
-      "PackageItems",
       "Items"
     ],
-    "verbose": false
+    "verbose": false,
+    "columns": []
   },
   {
     "name": "Users",
@@ -84,12 +227,29 @@ let api = [
       "Customers"
     ],
     "belongsTo": [],
-    "verbose": false
-  },
-  {
-    "name": "Test",
-    "hasMany": [],
-    "belongsTo": []
+    "verbose": false,
+    "columns": [
+      {
+        "key": "email",
+        "type": "STRING"
+      },
+      {
+        "key": "password",
+        "type": "STRING"
+      },
+      {
+        "key": "first_name",
+        "type": "STRING"
+      },
+      {
+        "key": "last_name",
+        "type": "STRING"
+      },
+      {
+        "key": "role",
+        "type": "STRING"
+      }
+    ]
   }
 ]
  module.exports = api

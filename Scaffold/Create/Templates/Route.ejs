@@ -99,15 +99,15 @@
 					}
 				})
 
-				app.get(`<%= routePrefix %>/all/associations`, async (req, res) => {
-					let <%= varName %> = await <%= name %>.getAllWith<%= model %>Associations(req, db);
-					if (<%= varName %>) {
-						res.json({code: 1, message: "Success", <%= varName %> })
-					} else {
-						res.json({code: -1, mesage: "Failed"})
-					}
-				})
-		<% } %>		
+		<% } %>	
+		app.get(`<%= routePrefix %>/all/associations`, async (req, res) => {
+			let <%= varName %> = await <%= name %>.getAllWithAssociations(req, db);
+			if (<%= varName %>) {
+				res.json({code: 1, message: "Success", <%= varName %> })
+			} else {
+				res.json({code: -1, mesage: "Failed"})
+			}
+		})	
 	<% } %>
 
 }
