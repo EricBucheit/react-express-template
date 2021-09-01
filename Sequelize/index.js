@@ -2,15 +2,16 @@ const Sequelize = require('sequelize')
 const Models = require('../Server/Models')
 const Seeds = require('../Server/Seeds')
 var Fake = require('../test/FakeSql')
+require('dotenv').config()
 
 const apiConfig = require("../Scaffold/Config/Config")
 // security purposes, get values from .env or other secure places
 
 const database = {
-  name: "jnb",
-  username: 'postgres',
-  password: '',
-  host: '127.0.0.1',
+  name: process.env.DB_NAME,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_USERNAME,
+  host: process.env.DB_HOST,
   dialect: 'postgres',
   logging: true,
 }
@@ -80,7 +81,9 @@ connection.sync(config)
 
     console.log(`Database & tables created!`)
 }).catch(err => {
-  console.error(` YOU MUST RENAME 'database' constant variable, and CREATE THE DATABASE: ${database.name} IN POSTGRES `)
+  console.error(` Make sure have a .env file with the right config,
+                  and CREATE THE DATABASE: ${database.name} IN POSTGRES 
+                  Check /SetupDocumentation/setup.txt`)
   console.log(err)
 })
 

@@ -1,16 +1,16 @@
 const Sequelize = require('sequelize')
 const Models = require('../Server/Models')
-
-// security purposes, get values from .env or other secure places
+require('dotenv').config()
 
 const database = {
-  name: "jnb",
-  username: 'postgres',
-  password: '',
-  host: '127.0.0.1',
+  name: process.env.DB_NAME,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PW,
+  host: process.env.DB_HOSR,
   dialect: 'postgres',
   logging: true,
 }
+
 
 const connection = new Sequelize(database.name, database.username, database.password, {
   host: database.host,
