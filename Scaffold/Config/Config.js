@@ -85,6 +85,11 @@ let api = [
     ],
     "belongsTo": [],
     "verbose": false
+  },
+  {
+    "name": "Test",
+    "hasMany": [],
+    "belongsTo": []
   }
 ]
  module.exports = api

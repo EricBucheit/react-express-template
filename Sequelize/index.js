@@ -40,14 +40,17 @@ for (let index in Models) {
 
 let model;
 for (let api of apiConfig) {
-  for (model of api.hasMany) {
-    db[api.name].hasMany(db[model], {constraints: false})
-  }
+  if (db[api.name]) {
+    for (model of api.hasMany) {
+      db[api.name].hasMany(db[model], {constraints: false})
+    }
 
   for (model of api.belongsTo) {
     db[api.name].belongsTo(db[model], {constraints: false})
   }
 
+  }
+ 
 }
 
 // put any other hard coded associations here or define
