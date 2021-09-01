@@ -1,5 +1,9 @@
- <%- importStr %>
- <%- exportStr %>
+ 
+ 	const axios = require("axios")
+ 	require("dotenv").config()
+ 	const routePrefix = `${process.env.API_URL}/packageItems`
+		 
+ module.exports = {
 
 		async test() {
 			let res = await axios.get(`${routePrefix}/test`).catch(err => console.log(err))
@@ -32,28 +36,8 @@
 			return res.data;
 		}, 
 		
-<% if (currentModel) { %>
-	<% for (let model of currentModel.hasMany) { %>
-		<% let lc_model = LowerCaseFirstLetter(model) %>
-		<% let functionName = `${name}With${model}` %>
 
-		async get<%= functionName %>(id) {
-			let res = await axios.get(`${routePrefix}/${id}/<%= lc_model %>`).catch(err => console.log(err))
-			return res.data;
-		},
-
-		async create<%= functionName %>(data) {
-			let res = await axios.post(`${routePrefix}/<%= lc_model %>`, data).catch(err => console.log(err))
-			return res.data;
-		},
-
-		async get<%= model %>WithAllAssociations(id) {
-			let res = await axios.get(`${routePrefix}/${id}/<%= lc_model %>/all/associations`).catch(err => console.log(err))
-			return res.data;
-		},
-
-
-	<% } %>
+	
 	async getWithAllAssociations() {
 		let res = await axios.get(`${routePrefix}/all/associations`).catch(err => console.log(err))
 		return res.data;
@@ -62,7 +46,7 @@
 		let res = await axios.get(`${routePrefix}/${id}/all/associations`).catch(err => console.log(err))
 		return res.data;
 	},
-<% } %>
+
 
 
 

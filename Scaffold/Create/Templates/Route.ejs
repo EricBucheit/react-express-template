@@ -108,6 +108,16 @@
 				res.json({code: -1, mesage: "Failed"})
 			}
 		})	
+
+		app.get(`<%= routePrefix %>/:id/all/associations`, async (req, res) => {
+			let <%= varName %> = await <%= name %>.getOneWithAllAssociations(req, db);
+			if (<%= varName %>) {
+				res.json({code: 1, message: "Success", <%= varName %> })
+			} else {
+				res.json({code: -1, mesage: "Failed"})
+			}
+		})	
+
 	<% } %>
 
 }

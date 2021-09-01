@@ -96,6 +96,20 @@
 			});
 			return <%= varName %>
 		},
+
+		async getOneWithAllAssociations(req, db) {
+			let <%= varName %> = await db.<%= name %>.findOne({
+				where: {
+					id: req.params.id
+				},
+				include: [
+				<% heiarchyStr.split('\n').forEach((line, index) => { %>
+					<%= line %>
+				<% }) %>
+				]
+			});
+			return <%= varName %>
+		},
 	<% } %>
 	
 			

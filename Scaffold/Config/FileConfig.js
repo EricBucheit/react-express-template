@@ -34,7 +34,7 @@ let config = {
 		name: false,
 		dir: {
 			template: "/Templates/Api.ejs",
-			output: "./Api/frontend",
+			output: "./src/Api",
 		},
 		apiType: "frontend",
 		verbose: false
